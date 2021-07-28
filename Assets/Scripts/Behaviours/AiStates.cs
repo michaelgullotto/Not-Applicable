@@ -51,6 +51,7 @@ public class AiStates : MonoBehaviour
     // sets AI to roam randomly
     private void Roaming()
     {
+        agent.speed = 20;
         if (!hasPath)
         {
             agent.SetDestination(new Vector3(Random.Range(1,200), Random.Range(1,200)));
@@ -84,7 +85,7 @@ public class AiStates : MonoBehaviour
     // sets AI to run to player
     private void Alert1()
     {
-
+        agent.speed = 30;
         if (!hasPath)
         {
             agent.SetDestination(player.transform.position);
@@ -107,6 +108,7 @@ public class AiStates : MonoBehaviour
     // sets AI to run to player 
     private void Alert2()
     {
+        agent.speed = 50;
         if (!hasPath)
         {
             agent.SetDestination(player.transform.position);
