@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class AiStates : MonoBehaviour
 {
@@ -18,8 +20,13 @@ public class AiStates : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     private bool hasPath = false;
     private bool unreachable = false;
+    private bool inRange = false;
+    private bool alertRise = false;
     private Dictionary<States, StateDelegate> states = new Dictionary<States, StateDelegate>();
-    public static int Alert = 0;
+    [SerializeField] public int Alert = 1;
+   [SerializeField] private GameManger _gameManger;
+
+    public static Vector3 startPos;
     // gives state if there isnt one
     public void ChangeState(States _newState)
     {
@@ -30,9 +37,11 @@ public class AiStates : MonoBehaviour
     // adds states
     private void Start()
     {
+        startPos = agent.transform.position;
         states.Add(States.Roaming, Roaming);
         states.Add(States.Alert1, Alert1);
         states.Add(States.Alert2, Alert2);
+        
     }
 
     // debugs log if not finding state
@@ -47,14 +56,28 @@ public class AiStates : MonoBehaviour
         {
             Alert = 0;
         }
+        // calculates players distance from agent and increases alert if in range
+        float playerDistance = (player.transform.position - agent.transform.position).magnitude;
+
+        if (playerDistance < 50)
+        {
+            inRange = true;
+            if (!alertRise)
+            {
+                Alert++;
+                StartCoroutine(AlertRising());
+            }
+            
+        }
+
     }
     // sets AI to roam randomly
     private void Roaming()
     {
-        agent.speed = 20;
+        agent.speed = 10;
         if (!hasPath)
         {
-            agent.SetDestination(new Vector3(Random.Range(1,200), Random.Range(1,200)));
+            agent.SetDestination(new Vector3(Random.Range(-50,50),0,Random.Range(-50,50)));
             hasPath = true;
             unreachable = false;
             StartCoroutine(PathTimelimit());
@@ -85,11 +108,27 @@ public class AiStates : MonoBehaviour
     // sets AI to run to player
     private void Alert1()
     {
-        agent.speed = 30;
+        float playerDistance = (player.transform.position - agent.transform.position).magnitude;
+        agent.speed = 10;
         if (!hasPath)
         {
-            agent.SetDestination(player.transform.position);
-            hasPath = true;
+            if (playerDistance > 20)
+            {
+                agent.SetDestination(new Vector3(Random.Range(-50,50),0,Random.Range(-50,50)));
+                hasPath = true;
+                unreachable = false;
+                StartCoroutine(PathTimelimit());
+            }
+            if (playerDistance < 20)
+            {
+                agent.SetDestination(player.transform.position);
+                hasPath = true;
+            }
+            if (unreachable)
+            {
+                hasPath = false;     
+            }
+           
         }
 
         if (agent.remainingDistance <= .1f && !agent.pathPending)
@@ -108,7 +147,7 @@ public class AiStates : MonoBehaviour
     // sets AI to run to player 
     private void Alert2()
     {
-        agent.speed = 50;
+        agent.speed = 30;
         if (!hasPath)
         {
             agent.SetDestination(player.transform.position);
@@ -133,8 +172,34 @@ public class AiStates : MonoBehaviour
     {
         while (unreachable == false)
         {
-            yield return new WaitForSeconds(30);
+            yield return new WaitForSeconds(10);
         }
         hasPath = false;
+    }
+
+    IEnumerator AlertRising()
+    {
+        while (inRange && Alert > 0)
+        {
+            alertRise = true;
+            Alert = Alert + 50;
+            
+            yield return new WaitForSeconds(1);
+        }
+
+        alertRise = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "player")
+        {
+            ChangeState(States.Roaming);
+            agent.SetDestination(startPos);
+            Alert = 0;
+            _gameManger.MonsterHit();
+            agent.transform.position = startPos;
+            
+        }
     }
 }
