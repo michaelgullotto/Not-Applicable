@@ -54,7 +54,7 @@ public class AiStates : MonoBehaviour
         
         if (Alert < 0)
         {
-            Alert = 0;
+            Alert = 1;
         }
         // calculates players distance from agent and increases alert if in range
         float playerDistance = (player.transform.position - agent.transform.position).magnitude;
@@ -147,7 +147,7 @@ public class AiStates : MonoBehaviour
     // sets AI to run to player 
     private void Alert2()
     {
-        agent.speed = 30;
+        agent.speed = 20;
         if (!hasPath)
         {
             agent.SetDestination(player.transform.position);
@@ -182,7 +182,7 @@ public class AiStates : MonoBehaviour
         while (inRange && Alert > 0)
         {
             alertRise = true;
-            Alert = Alert + 50;
+            Alert = Alert + 5;
             
             yield return new WaitForSeconds(1);
         }
@@ -196,7 +196,7 @@ public class AiStates : MonoBehaviour
         {
             ChangeState(States.Roaming);
             agent.SetDestination(startPos);
-            Alert = 0;
+            Alert = 1;
             _gameManger.MonsterHit();
             agent.transform.position = startPos;
             

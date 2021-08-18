@@ -10,10 +10,10 @@ public class GameManger : MonoBehaviour
     [SerializeField] private GameObject KeysSlot;
     [SerializeField] private GameObject TeddyBear;
     [SerializeField] private GameObject TeddySlot;
-    [SerializeField] private GameObject lightSaber;
-    [SerializeField] private GameObject lightSaberSlot;
-    [SerializeField] private GameObject TourchSlot;
-    [SerializeField] private GameObject Tourch;
+    //[SerializeField] private GameObject lightSaber;
+    //[SerializeField] private GameObject lightSaberSlot;
+    [SerializeField] private GameObject TorchSlot;
+    [SerializeField] private GameObject Torch;
     public static bool hasTeddy = false;
     public static bool hasKeys = false;
     public static bool hasTourch = false;
@@ -31,7 +31,7 @@ public class GameManger : MonoBehaviour
                 if (keysDistance < 5f)
                 {
                     Destroy(keys);
-                    Instantiate(Resources.Load<GameObject>("Keys"),KeysSlot.transform.position,KeysSlot.transform.rotation);
+                    Instantiate(Resources.Load<GameObject>("KeyPrefab"),KeysSlot.transform.position,KeysSlot.transform.rotation);
                     hasKeys = true;
                 }
             }
@@ -42,29 +42,30 @@ public class GameManger : MonoBehaviour
                 if (teddyDistance < 5f)
                 {
                     Destroy(TeddyBear);
-                    Instantiate(Resources.Load<GameObject>("Teddy"),TeddySlot.transform.position,TeddySlot.transform.rotation);
+                    Instantiate(Resources.Load<GameObject>("TeddyPrefab"),TeddySlot.transform.position,TeddySlot.transform.rotation);
                     hasTeddy = true;
                 }
  
             }
-            if (lightSaber != null)
+            
+            // if (lightSaber != null)
+            // {
+            //     float lightSaberDistance = (player.transform.position - lightSaber.transform.position).magnitude;
+            //     if (lightSaberDistance < 5f)
+            //    {
+           //         Destroy(lightSaber);
+          //          Instantiate(Resources.Load<GameObject>("lightSaber"),lightSaberSlot.transform.position,lightSaberSlot.transform.rotation);
+           //         hasLightSaber = true;
+          //      }
+          //  }
+          
+            if (Torch != null)
             {
-                float lightSaberDistance = (player.transform.position - lightSaber.transform.position).magnitude;
-                if (lightSaberDistance < 5f)
+                float TorchDistance = (player.transform.position - Torch.transform.position).magnitude;
+                if (TorchDistance < 5f)
                 {
-                    Destroy(lightSaber);
-                    Instantiate(Resources.Load<GameObject>("lightSaber"),lightSaberSlot.transform.position,lightSaberSlot.transform.rotation);
-                    hasLightSaber = true;
-                }
- 
-            }
-            if (TeddyBear != null)
-            {
-                float TourchDistance = (player.transform.position - Tourch.transform.position).magnitude;
-                if (TourchDistance < 5f)
-                {
-                    Destroy(Tourch);
-                    Instantiate(Resources.Load<GameObject>("Tourch"),TourchSlot.transform.position,TourchSlot.transform.rotation);
+                    Destroy(Torch);
+                    Instantiate(Resources.Load<GameObject>("FlashlightPrefab"),TorchSlot.transform.position,TorchSlot.transform.rotation);
                     hasTourch = true;
                 }
             }
