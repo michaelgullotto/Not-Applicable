@@ -11,15 +11,20 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Maze port/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/ThirdPersonmovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Mainmenu.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Maze port/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/Behaviours/GameManger.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Game/Player.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Behaviours/AiStates.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Game/ThirdPersonmovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Game/GameManger.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/Mainmenu.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Behaviours/AiStates.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Game/Pausemenu.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1wFKF5fuKYvhylx6bLvw3lRRsfL" />
@@ -70,7 +75,8 @@
       <option name="presentableId" value="Default" />
       <updated>1628048809321</updated>
       <workItem from="1628048844128" duration="9396000" />
-      <workItem from="1629258352993" duration="4965000" />
+      <workItem from="1629258352993" duration="5559000" />
+      <workItem from="1630021492901" duration="4865000" />
     </task>
     <servers />
   </component>
